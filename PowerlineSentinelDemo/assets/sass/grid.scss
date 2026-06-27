@@ -1,0 +1,174 @@
+
+@use 'sass:list';
+
+@mixin breakpoint ($class) {
+  @if $class == xs {
+    @media (max-width: 575px) { @content; }
+  }
+
+  @else if $class == sm {
+    @media (min-width: 576px) { @content; }
+  }
+
+  @else if $class == exsm {
+    @media (min-width: 576px) and (max-width: 767px) { @content; }
+  }
+
+  @else if $class == ltmd {
+    @media (max-width: 767px) { @content; }
+  }
+
+  @else if $class == md {
+    @media (min-width: 768px) { @content; }
+  }
+
+  @else if $class == exmd {
+    @media (min-width: 768px) and (max-width: 995px) { @content; }
+  }
+
+  @else if $class == ltlg {
+    @media (max-width: 995px) { @content; }
+  }
+
+  @else if $class == lg {
+    @media (min-width: 996px) { @content; }
+  }
+
+  @else if $class == exlg {
+    @media (min-width: 996px) and (max-width: 1199px) { @content; }
+  }
+
+  @else if $class == ltxl {
+    @media (max-width: 1199px) { @content; }
+  }
+
+  @else if $class == xl {
+    @media (min-width: 1200px) { @content; }
+  }
+
+  @else if $class == exxl {
+    @media (min-width: 1200px) and (max-width: 1399px) { @content; }
+  }
+
+  @else if $class == ltxxl {
+    @media (max-width: 1399px) { @content; }
+  }
+
+  @else if $class == xxl {
+    @media (min-width: 1400px) { @content; }
+  }
+}
+
+/* container */
+
+.container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 16px;
+  padding-left: 16px;
+  max-width: 100%;
+  width: 100%;
+
+  @include breakpoint(sm){
+    width: 540px;
+  }
+
+  @include breakpoint(md){
+    width: 720px;
+  }
+
+  @include breakpoint(lg){
+    width: 960px;
+  }
+
+  @include breakpoint(xl){
+    width: 1140px;
+  }
+
+  @include breakpoint(xxl){
+    width: 1320px;
+  }
+}
+
+/* row */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -16px;
+  margin-left: -16px;
+}
+
+/* col */
+
+.col {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+/* row-nogutter */
+
+.row-nogutter {
+  display: flex;
+  flex-wrap: wrap;
+
+  .col {
+    padding: 0;
+  }
+}
+
+/* flexible col */
+
+.col-flex {
+  flex: 1 1 0px;
+  padding: 0 16px;
+}
+
+/* display */
+
+.d-none {display: none !important;}
+
+/* functions */
+
+$grid-screen: xs, sm, md, lg, xl, xxl;
+$grid-percentage: 8.33333%, 16.66667%, 25%, 33.33333333%, 41.66667%, 50%, 58.33333%, 66.66667%, 75%, 83.33333%, 91.66667%, 100%;
+$display-types: inline-block, inline, block, flex, none;
+
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    @extend .col;
+    max-width: list.nth($grid-percentage, $i);
+  }
+
+  .offset-#{$i} {
+    margin-left: list.nth($grid-percentage, $i);
+  }
+}
+
+@each $j in $grid-screen {
+  @for $i from 1 through 12 {
+    .col-#{$j}-#{$i} {
+      @extend .col;
+    }
+
+    @include breakpoint (#{$j}) {
+      .col-#{$j}-#{$i} {
+        max-width: list.nth($grid-percentage, $i);
+      }
+
+      .offset-#{$j}-#{$i} {
+        margin-left: list.nth($grid-percentage, $i);
+      }
+    }
+  }
+
+  @each $k in $display-types {
+    @include breakpoint (#{$j}) {
+      .d-#{$j}-#{$k} {display: #{$k} !important;}
+    }
+  }
+}

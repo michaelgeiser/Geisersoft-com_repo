@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+  build:
+    commands:
+      - echo "Deploying all repo files to S3..."
+      # Sync all files to S3, excluding pipeline config files and .git
+      # Uses --size-only to avoid re-uploading unchanged files
+      # Does NOT use --delete, so files in S3 that aren't in the repo are left alone
+      - |
+        aws s3 sync . s3://geisersoft-site-358227436652/ \
+          --exclude ".git/*" \
+          --exclude "buildspec-*.yml" \
+          --exclude "pipeline-stack.yaml" \
+          --size-only
+  post_build:
+    commands:
+      - echo "Invalidating CloudFront cache..."
+      - aws cloudfront create-invalidation --distribution-id E38F17UQPVUDDG --paths "/*"
+      - echo "Deploy complete."

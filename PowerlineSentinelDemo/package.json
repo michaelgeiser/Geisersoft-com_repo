@@ -1,0 +1,28 @@
+{
+	"name": "site",
+	"version": "1.0.0",
+	"description": "desc",
+	"author": "author",
+	"license": "GPL-2.0+",
+	"repository": {
+		"type": "git",
+		"url": ""
+	},
+	"scripts": {
+		"build": "webpack --mode development --config webpack.config.js",
+		"dist": "webpack --mode production --config webpack.config.js",
+		"watch": "webpack --mode development --watch --config webpack.config.js"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.4.3",
+		"babel-loader": "^8.0.4",
+		"css-loader": "^1.0.1",
+		"file-loader": "^3.0.1",
+		"mini-css-extract-plugin": "^0.4.5",
+		"optimize-css-assets-webpack-plugin": "^5.0.1",
+		"sass": "^1.55.0",
+		"sass-loader": "^7.1.0",
+		"webpack": "^4.30.0",
+		"webpack-cli": "^3.1.2"
+	}
+}

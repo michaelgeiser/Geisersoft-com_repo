@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.</title>
+    <link rel="stylesheet" href="dist/bundle.css">
+  </head>
+  <body>
+
+    <div class="page page--home">
+      <div class="header">
+        <img class="logo-cap" src="images/logo-cap-white.svg" />
+        <span></span>
+        <img class="logo-macs" src="images/logo-macs-white.svg" />
+      </div>
+
+      <div class="page-content page-content--start">
+        <h1>Protecting our transmission lines with generative AI</h1>
+        <p>In September 2024, the winners of the Capgemini AWS Global Hackathon introduced Powerline Sentinel AI, a groundbreaking solution designed to enhance the reliability of powerline infrastructure. This innovative application uses advanced technologies like machine learning and computer vision to detect vegetation encroachment on powerlines - one of the leading causes of power outages.</p>
+        <button class="button button--home">Get started</button>
+      </div>
+
+      <div class="page-content page-content--video1 inactive">
+        <video width="100%" height="auto">
+          <source src="images/video1.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <div class="page page--main inactive">
+      <div class="page-left">
+        <div class="header">
+          <img class="logo-cap" src="images/logo-cap-color.svg" />
+          <span></span>
+          <img class="logo-macs" src="images/logo-macs-black.svg" />
+        </div>
+
+        <div class="page-content-wrapper">
+          <div class="page-content page-content--form">
+            <form>
+              <h2>Generate report for U.S.</h2>
+              <div class="form-block">
+                <label>Select state</label>
+                <select class="select-state">
+                </select>
+              </div>
+              <div class="form-block">
+                <label>Select county</label>
+                <select class="select-county blocked">
+                </select>
+              </div>
+              <div class="form-block">
+                <label>Power line type</label>
+                <select class="select-power">
+                  <option>HV – High Voltage</option>
+                  <option disabled>MV - Medium Voltage</option>
+                  <option disabled>LV - Low Voltage</option>
+                </select>
+              </div>
+              <div class="buttons--horizontal">
+                <button class="button button--form">Generate report</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="page-content page-content--video2 inactive">
+            <div class="video-box">
+              <div class="video-wrapper">
+                <video width="100%" height="100%">
+                  <source src="images/video2.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-content page-content--results inactive">
+          <h2>Report for</h2>
+          <div class="results-place">
+            <span>U.S.</span>
+            <span class="results-state"></span>
+            <span class="results-county"></span>
+          </div>
+
+          <div class="results-blocks">
+          </div>
+
+          <template class="block-template">
+            <div class="block">
+              <div class="block-date"></div>
+              <div class="block-location">
+                <span class="location-value">
+                  <span>Location</span>
+                  <span class="location-latlng"></span>
+                </span>
+                <span class="location-value">
+                  <span>Power Line</span>
+                  <span class="location-power"></span>
+                </span>
+                <span class="location-risk"><span></span> RISK</span>
+              </div>
+              <div class="block-info">
+                <div class="location-temp">
+                  <b></b>
+                  <span>Avg. temperature</span>
+                </div>
+                <div class="location-humidity">
+                  <b></b>
+                  <span>Avg. humidity</span>
+                </div>
+                <div class="location-moisture">
+                  <b></b>
+                  <span>Soil moisture</span>
+                </div>
+                <div class="location-growth">
+                  <b></b>
+                  <span>Estimated growth rate</span>
+                </div>
+              </div>
+              <div class="block-main">
+                <div class="block-main-left">
+                  <h3>Risk assessment</h3>
+                  <p></p>
+                </div>
+                <div class="block-main-right">
+                  <img src="images/pic1.jpg" />
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+        </div>
+
+        <div class="footer">
+          <span>Crafted by MACS AI Lab</span>
+          <span>© 2024 Capgemini. All rights reserved.<span>
+        </div>
+      </div>
+
+      <div class="page-right">
+        <button class="button--right-home"><i class="icon-home"></i></button>
+        <button class="inactive"><i class="icon-time-back"></i></button>
+        <button class="inactive"><i class="icon-bell"></i></button>
+        <button class="inactive"><i class="icon-user"></i></button>
+        <button class="inactive button--right-logout"><i class="icon-logout"></i></button>
+      </div>
+
+      <div class="popup-wrapper inactive">
+        <div class="popup-overlay"></div>
+        <div class="popup">
+          <button class="popup-close"><i class="icon-close"></i></button>
+          <div class="popup-time"><span></span> sec.</div>
+          <p>We’ll reset the app shortly due to inactivity.<br>Tap 'Cancel' to keep going!</p>
+          <button class="button button--popup-close">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="dist/bundle.js"></script>
+  </body>
+</html>

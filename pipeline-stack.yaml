@@ -1,0 +1,258 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Two CodePipeline pipelines for deploying geisersoft.com static site to S3/CloudFront.
+  1) Manual - deploys all repo files to S3 (does not delete files not in the repo)
+  2) Webhook-triggered - deploys only changed files from the push
+
+Parameters:
+  GitHubOwner:
+    Type: String
+    Description: GitHub repository owner (username or org)
+    Default: REPLACE_WITH_GITHUB_USERNAME
+
+  GitHubRepo:
+    Type: String
+    Description: GitHub repository name
+    Default: Geisersoft-com_repo
+
+  GitHubBranch:
+    Type: String
+    Description: Branch to track
+    Default: main
+
+  GitHubConnectionArn:
+    Type: String
+    Description: >
+      ARN of the AWS CodeStar Connection to GitHub.
+      Create one at https://console.aws.amazon.com/codesuite/settings/connections
+    Default: REPLACE_WITH_CODESTAR_CONNECTION_ARN
+
+Resources:
+
+  #############################################
+  # Shared IAM Roles
+  #############################################
+
+  CodePipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: geisersoft-pipeline-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codepipeline.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CodePipelineAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:GetBucketVersioning
+                Resource:
+                  - !Sub 'arn:aws:s3:::${ArtifactBucket}/*'
+                  - !Sub 'arn:aws:s3:::${ArtifactBucket}'
+              - Effect: Allow
+                Action:
+                  - codebuild:StartBuild
+                  - codebuild:BatchGetBuilds
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - codestar-connections:UseConnection
+                Resource: !Ref GitHubConnectionArn
+
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: geisersoft-codebuild-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CodeBuildAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:DeleteObject
+                  - s3:ListBucket
+                Resource:
+                  - 'arn:aws:s3:::geisersoft-site-358227436652'
+                  - 'arn:aws:s3:::geisersoft-site-358227436652/*'
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource:
+                  - !Sub 'arn:aws:s3:::${ArtifactBucket}/*'
+              - Effect: Allow
+                Action:
+                  - cloudfront:CreateInvalidation
+                Resource:
+                  - 'arn:aws:cloudfront::358227436652:distribution/E38F17UQPVUDDG'
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  #############################################
+  # Artifact Bucket
+  #############################################
+
+  ArtifactBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'geisersoft-pipeline-artifacts-${AWS::AccountId}'
+      LifecycleConfiguration:
+        Rules:
+          - Id: CleanupOldArtifacts
+            Status: Enabled
+            ExpirationInDays: 7
+
+  #############################################
+  # CodeBuild Projects
+  #############################################
+
+  BuildProjectFullDeploy:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: geisersoft-deploy-full
+      Description: Deploy all repo files to S3 (does not affect files not in the repo)
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:5.0
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: buildspec-small.yml
+      TimeoutInMinutes: 15
+
+  BuildProjectChanged:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: geisersoft-deploy-changed-files
+      Description: Deploy only changed files from the latest push
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:5.0
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: buildspec-changed.yml
+      TimeoutInMinutes: 10
+
+  #############################################
+  # Pipeline 1: Manual - Full Deploy
+  #############################################
+
+  PipelineFullDeploy:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      Name: geisersoft-deploy-full
+      RoleArn: !GetAtt CodePipelineRole.Arn
+      ArtifactStore:
+        Type: S3
+        Location: !Ref ArtifactBucket
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: GitHubSource
+              ActionTypeId:
+                Category: Source
+                Owner: AWS
+                Provider: CodeStarSourceConnection
+                Version: '1'
+              Configuration:
+                ConnectionArn: !Ref GitHubConnectionArn
+                FullRepositoryId: !Sub '${GitHubOwner}/${GitHubRepo}'
+                BranchName: !Ref GitHubBranch
+                DetectChanges: 'false'
+              OutputArtifacts:
+                - Name: SourceOutput
+        - Name: Deploy
+          Actions:
+            - Name: DeployAllFiles
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: '1'
+              Configuration:
+                ProjectName: !Ref BuildProjectFullDeploy
+              InputArtifacts:
+                - Name: SourceOutput
+
+  #############################################
+  # Pipeline 2: Webhook - Changed Files Only
+  #############################################
+
+  PipelineChangedFiles:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      Name: geisersoft-deploy-changed
+      RoleArn: !GetAtt CodePipelineRole.Arn
+      ArtifactStore:
+        Type: S3
+        Location: !Ref ArtifactBucket
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: GitHubSource
+              ActionTypeId:
+                Category: Source
+                Owner: AWS
+                Provider: CodeStarSourceConnection
+                Version: '1'
+              Configuration:
+                ConnectionArn: !Ref GitHubConnectionArn
+                FullRepositoryId: !Sub '${GitHubOwner}/${GitHubRepo}'
+                BranchName: !Ref GitHubBranch
+                DetectChanges: 'true'
+              OutputArtifacts:
+                - Name: SourceOutput
+        - Name: Deploy
+          Actions:
+            - Name: DeployChangedFiles
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: '1'
+              Configuration:
+                ProjectName: !Ref BuildProjectChanged
+              InputArtifacts:
+                - Name: SourceOutput
+
+Outputs:
+  PipelineFullDeployName:
+    Value: !Ref PipelineFullDeploy
+    Description: Pipeline for deploying all repo files (manual trigger)
+
+  PipelineChangedFilesName:
+    Value: !Ref PipelineChangedFiles
+    Description: Pipeline for deploying changed files (webhook trigger)
+
+  ArtifactBucketName:
+    Value: !Ref ArtifactBucket
+    Description: S3 bucket for pipeline artifacts

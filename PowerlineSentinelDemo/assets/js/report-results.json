@@ -1,0 +1,406 @@
+[
+  {
+    "county": "Orange",
+    "state": "New York",
+    "results": [
+      {
+        "latlng": "[41.379656, -74.324020]",
+        "risk": "MEDIUM",
+        "temperature": "9.8",
+        "humidity": "80.66",
+        "soilMoisture": "0.56",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is moderate to high. With favorable weather conditions and the proximity of a water body, plant growth is likely to accelerate further. Although the current vegetation is well-maintained, the high growth rate suggests a need for regular monitoring to prevent potential encroachment issues.",
+        "image": "images/reports/orange1.jpg"
+      },
+      {
+        "latlng": "[41.3888069, -74.687764]",
+        "risk": "LOW",
+        "temperature": "9.22",
+        "humidity": "81.75",
+        "soilMoisture": "0.59",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is low. Despite the dense forest cover and favorable weather conditions for plant growth, the well-maintained state of vegetation helps minimize the risk. Continued regular monitoring should be sufficient to maintain control over vegetation expansion.",
+        "image": "images/reports/orange10.jpg"
+      },
+      {
+        "latlng": "[41.456875, -74.374413]",
+        "risk": "LOW",
+        "temperature": "10.51",
+        "humidity": "79.5",
+        "soilMoisture": "0.57",
+        "growthRate": "36",
+        "assessmentText": "The vegetation growth risk in this area is low. The urban location and low-lying vegetation limit the potential for significant encroachment, even with favorable weather conditions for plant growth. Regular maintenance should easily keep the vegetation under control.",
+        "image": "images/reports/orange7.jpg"
+      },
+      {
+        "latlng": "[41.411677, -74.374965]",
+        "risk": "MEDIUM",
+        "temperature": "9.8",
+        "humidity": "80.66",
+        "soilMoisture": "0.56",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is moderate. The proximity to a river, favorable weather conditions, and a noticeable area of overgrowth, combined with a relatively high growth rate, suggest potential for further expansion. Increased monitoring and targeted management in the overgrown areas are recommended to prevent escalation.",
+        "image": "images/reports/orange2.jpg"
+      },
+      {
+        "latlng": "[41.426965, -74.414915]",
+        "risk": "LOW",
+        "temperature": "9.8",
+        "humidity": "80.66",
+        "soilMoisture": "0.56",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is low. Despite favorable growth conditions and a relatively high plant growth rate, the sparse and scattered vegetation, with only isolated plants in vulnerable areas, minimizes the risk of significant encroachment. Routine monitoring should be sufficient to manage any potential issues.",
+        "image": "images/reports/orange3.jpg"
+      },
+      {
+        "latlng": "[41.443613, -74.534172]",
+        "risk": "HIGH",
+        "temperature": "9.8",
+        "humidity": "80.66",
+        "soilMoisture": "0.56",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is high. The combination of a diverse and dense plant cover, favorable growth conditions, and a high growth rate, along with numerous visible overgrown areas, significantly increases the potential for vegetation encroachment. Immediate action and consistent monitoring are essential to prevent uncontrolled expansion.",
+        "image": "images/reports/orange4.jpg"
+      },
+      {
+        "latlng": "[41.451194, -74.55957]",
+        "risk": "HIGH",
+        "temperature": "9.8",
+        "humidity": "80.66",
+        "soilMoisture": "0.56",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is high. Dense plant cover, rapid growth rates, and favorable weather conditions, combined with the presence of extensive energy infrastructure, create a significant risk of interference or damage. Proactive vegetation management and frequent inspections are crucial to mitigate potential hazards.",
+        "image": "images/reports/orange5.jpg"
+      },
+      {
+        "latlng": "[41.452512, -74.386601]",
+        "risk": "MEDIUM",
+        "temperature": "9.8",
+        "humidity": "80.66",
+        "soilMoisture": "0.56",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is low. Although the growth rate is relatively high and conditions are favorable for plant growth, the small wooded area in the urban setting and the current good maintenance of the greenery significantly reduce the risk of encroachment. Regular upkeep should ensure the situation remains manageable.",
+        "image": "images/reports/orange6.jpg"
+      },
+      {
+        "latlng": "[41.547945, -74.019235]",
+        "risk": "HIGH",
+        "temperature": "9.8",
+        "humidity": "80.66",
+        "soilMoisture": "0.56",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is high. The combination of a dense plant cover, favorable weather conditions, and a high growth rate, along with visible overgrown areas, creates a significant risk of uncontrolled vegetation expansion. Immediate action and regular monitoring are essential to manage and prevent further encroachment.",
+        "image": "images/reports/orange8.jpg"
+      },
+      {
+        "latlng": "[41.2138773, -74.2558458]",
+        "risk": "MEDIUM",
+       "temperature": "10.84",
+        "humidity": "79.88",
+        "soilMoisture": "0.63",
+        "growthRate": "36",
+        "assessmentText": "The vegetation growth risk in this area is medium. While the current maintenance of greenery is adequate, the proximity to a water body and favorable growth conditions require ongoing monitoring due to the potential for accelerated plant growth. Regular checks will ensure that any emerging risks are addressed promptly.",
+        "image": "images/reports/orange9.jpg"
+      }
+    ]
+  },
+  {
+    "county": "Humboldt",
+    "state": "California",
+    "results": [
+      {
+        "latlng": "[40.483517, -123.781392]",
+        "risk": "HIGH",
+        "temperature": "11.78",
+        "humidity": "71.78",
+        "soilMoisture": "0.68",
+        "growthRate": "35",
+        "assessmentText": "The vegetation growth risk in this area is high. Despite an average growth rate, visible neglect in maintaining the plant state in detected areas increases the likelihood of uncontrolled vegetation spread. Immediate intervention and consistent maintenance are necessary to prevent further deterioration and encroachment.",
+        "image": "images/reports/humboldt1.jpg"
+      },
+      {
+        "latlng": "[40.719369, -123.5672505]",
+        "risk": "HIGH",
+        "temperature": "11.78",
+        "humidity": "71.78",
+        "soilMoisture": "0.68",
+        "growthRate": "35",
+        "assessmentText": "The vegetation growth risk in this area is high. The proximity to a river, combined with average growth rates and dense forest cover, increases the potential for rapid vegetation spread. Visible neglect in plant maintenance within identified areas further heightens the risk, requiring immediate attention and ongoing management to prevent uncontrolled encroachment.",
+        "image": "images/reports/humboldt2.jpg"
+      },
+      {
+        "latlng": "[40.726635, -123.658840]",
+        "risk": "LOW",
+        "temperature": "11.78",
+        "humidity": "71.78",
+        "soilMoisture": "0.68",
+        "growthRate": "35",
+        "assessmentText": "The vegetation growth risk in this area is low. The average growth rate, coupled with well-maintained vegetation and the presence of low-growing plants, minimizes the risk of significant encroachment. Regular monitoring and maintenance should be sufficient to maintain control over the area.",
+        "image": "images/reports/humboldt3.jpg"
+      },
+      {
+        "latlng": "[40.746057, -123.966860]",
+        "risk": "HIGH",
+        "temperature": "11.78",
+        "humidity": "71.78",
+        "soilMoisture": "0.68",
+        "growthRate": "35",
+        "assessmentText": "The vegetation growth risk in this area is high. Despite an average growth rate, visible neglect in maintaining plant health and the presence of numerous identified areas of potential risk significantly increase the likelihood of encroachment. Immediate intervention and regular monitoring are essential to prevent further spread and ensure effective control.",
+        "image": "images/reports/humboldt4.jpg"
+      },
+      {
+        "latlng": "[40.750112, -123.721496]",
+        "risk": "LOW",
+        "temperature": "11.56",
+        "humidity": "72.19",
+        "soilMoisture": "0.69",
+        "growthRate": "36",
+        "assessmentText": "The vegetation growth risk in this area is low. With an average growth rate, well-maintained vegetation, and only a small area of potential risk detected, the likelihood of significant encroachment is minimal. Ongoing monitoring should be sufficient to maintain control and address any emerging issues.",
+        "image": "images/reports/humboldt5.jpg"
+      },
+      {
+        "latlng": "[40.757565, -123.979005]",
+        "risk": "HIGH",
+        "temperature": "11.56",
+        "humidity": "72.19",
+        "soilMoisture": "0.69",
+        "growthRate": "36",
+        "assessmentText": "The vegetation growth risk in this area is high. Despite an average growth rate, the dense forest cover, along with numerous identified areas of potential risk, significantly increases the likelihood of encroachment. Immediate attention and regular monitoring are required to prevent further spread and maintain control over the area.",
+        "image": "images/reports/humboldt6.jpg"
+      },
+      {
+        "latlng": "[40.767862, -123.882932]",
+        "risk": "MEDIUM",
+        "temperature": "11.56",
+        "humidity": "72.19",
+        "soilMoisture": "0.69",
+        "growthRate": "36",
+        "assessmentText": "The vegetation growth risk in this area is moderate. The dense forest cover, proximity to a river, and average plant maintenance near energy infrastructure create a potential for vegetation expansion. While the current maintenance seems adequate, regular monitoring is necessary to prevent encroachment and ensure the safety of the surrounding infrastructure.",
+        "image": "images/reports/humboldt7.jpg"
+      },
+      {
+        "latlng": "[40.812175, -124.088038]",
+        "risk": "MEDIUM",
+        "temperature": "11.66",
+        "humidity": "86.66",
+        "soilMoisture": "0.73",
+        "growthRate": "38",
+        "assessmentText": "The vegetation growth risk in this area is moderate. Although the growth rate is average, the presence of small but distinct clusters of trees identified as risk areas increases the potential for encroachment. Monitoring and targeted management of these areas will be essential to prevent further vegetation spread.",
+        "image": "images/reports/humboldt8.jpg"
+      },
+      {
+        "latlng": "[40.853683, -124.064219]",
+        "risk": "MEDIUM",
+        "temperature": "11.66",
+        "humidity": "86.66",
+        "soilMoisture": "0.73",
+        "growthRate": "38",
+        "assessmentText": "The vegetation growth risk in this area is moderate. The presence of distinct clusters of trees identified as risk areas, combined with the partially developed environment, creates a moderate potential for vegetation encroachment. Regular monitoring and targeted management of these tree clusters will be necessary to mitigate the risk.",
+        "image": "images/reports/humboldt9.jpg"
+      },
+      {
+        "latlng": "[40.7160409,-123.5759822]",
+        "risk": "MEDIUM",
+        "temperature": "11.78",
+        "humidity": "71.78",
+        "soilMoisture": "0.68",
+        "growthRate": "35",
+        "assessmentText": "The vegetation growth risk in this area is high. Dense forest cover, combined with average plant growth rates and visible overgrowth areas overlapping with the location of power lines, significantly increases the risk of vegetation encroachment. Immediate action and regular monitoring are necessary to prevent interference with the energy infrastructure.",
+        "image": "images/reports/humboldt10.jpg"
+      }
+    ]
+  },
+  {
+    "county": "Hamilton",
+    "state": "Florida",
+    "results": [
+      {
+        "latlng": "[30.513756, -82.9329595]",
+        "risk": "LOW",
+        "temperature": "20.3",
+        "humidity": "77.94",
+        "soilMoisture": "0.43",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is low. Despite a relatively high plant growth rate, the absence of significant vegetation clusters along the power lines and the proper maintenance of the energy infrastructure reduce the risk of interference. Regular monitoring should be sufficient to maintain control over the situation.",
+        "image": "images/reports/hamilton1.jpg"
+      },
+      {
+        "latlng": "[30.559308, -82.972231]",
+        "risk": "MEDIUM",
+        "temperature": "20.3",
+        "humidity": "77.94",
+        "soilMoisture": "0.43",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is moderate. The relatively high plant growth rate and the presence of vegetation in identified risk areas, which may potentially threaten the energy network, increase the likelihood of interference. Regular monitoring and targeted maintenance of these areas are recommended to prevent any damage to the infrastructure.",
+        "image": "images/reports/hamilton2.jpg"
+      },
+      {
+        "latlng": "[30.598633, -82.936269]",
+        "risk": "MEDIUM",
+        "temperature": "20.3",
+        "humidity": "77.94",
+        "soilMoisture": "0.43",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is moderate. With a relatively high growth rate and the presence of vegetation in identified risk zones that could potentially affect the energy infrastructure, there is a notable risk of encroachment. Ongoing monitoring and focused maintenance in these areas will be necessary to avoid any disruptions to the network.",
+        "image": "images/reports/hamilton3.jpg"
+      },
+      {
+        "latlng": "[30.3829578, -82.7649506]",
+        "risk": "LOW",
+        "temperature": "20.52",
+        "humidity": "78.38",
+        "soilMoisture": "0.46",
+        "growthRate": "38",
+        "assessmentText": "The vegetation growth risk in this area is low. Although the plant growth rate is relatively high, only a few areas with vegetation close to the power lines have been detected. The energy infrastructure is well-maintained, and nearby water bodies do not appear to impact the forest density, minimizing the risk of encroachment. Regular monitoring should be sufficient to manage the situation.",
+        "image": "images/reports/hamilton4.jpg"
+      },
+      {
+        "latlng": "[30.4005811, -82.8342896]",
+        "risk": "LOW",
+        "temperature": "20.3",
+        "humidity": "77.94",
+        "soilMoisture": "0.43",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is low. Although the plant growth rate is relatively high, only a single area with sparse vegetation near the power lines has been detected. The energy infrastructure is properly maintained, and nearby water bodies do not seem to affect the forest density, keeping the risk of encroachment minimal. Routine monitoring should be sufficient to manage the situation.",
+        "image": "images/reports/hamilton5.jpg"
+      },
+      {
+        "latlng": "[30.4690155, -82.9047491]",
+        "risk": "MEDIUM",
+        "temperature": "20.3",
+        "humidity": "77.94",
+        "soilMoisture": "0.43",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is moderate. The relatively high plant growth rate and the presence of dense vegetation in the identified risk area, which could potentially threaten the energy infrastructure, increase the risk of interference. Regular monitoring and targeted maintenance are recommended to prevent any disruptions to the network.",
+        "image": "images/reports/hamilton6.jpg"
+      },
+      {
+        "latlng": "[30.4939599, -82.9401168]",
+        "risk": "MEDIUM",
+        "temperature": "20.3",
+        "humidity": "77.94",
+        "soilMoisture": "0.43",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is moderate. Despite proper maintenance of the energy infrastructure, several areas with dense tree clusters near the power lines pose a potential risk. Additionally, nearby water bodies contribute to higher soil moisture, which accelerates plant growth, requiring regular monitoring and maintenance to prevent interference.",
+        "image": "images/reports/hamilton7.jpg"
+      },
+      {
+        "latlng": "[30.4958447, -82.9256446]",
+        "risk": "MEDIUM",
+        "temperature": "20.3",
+        "humidity": "77.94",
+        "soilMoisture": "0.43",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is moderate. While the energy infrastructure is well-maintained, there are several zones with dense tree clusters close to the power lines, increasing the risk of encroachment. The presence of nearby water bodies boosts soil moisture, accelerating plant growth, making ongoing monitoring and maintenance essential.",
+        "image": "images/reports/hamilton8.jpg"
+      },
+      {
+        "latlng": "[30.5163818, -83.1532032]",
+        "risk": "LOW",
+        "temperature": "20.3",
+        "humidity": "77.94",
+        "soilMoisture": "0.43",
+        "growthRate": "37",
+        "assessmentText": "The vegetation growth risk in this area is low. Despite the relatively high plant growth rate, only a single location with moderate forest density near the power lines has been detected. The energy infrastructure is well-maintained, minimizing the risk of significant encroachment. Routine monitoring should be sufficient to manage the situation.",
+        "image": "images/reports/hamilton10.jpg"
+      }
+    ]
+  },
+  {
+    "county": "Baker",
+    "state": "Oregon",
+    "results": [
+      {
+        "latlng": "[44.66805, -117.99586]",
+        "risk": "MEDIUM",
+        "temperature": "7.5",
+        "humidity": "62.34",
+        "soilMoisture": "0.41",
+        "growthRate": "29",
+        "assessmentText": "The vegetation growth risk in this area is moderate. Although the plant growth rate is low, significant clusters of vegetation and visible overgrowth along the path of power lines present a potential hazard. Targeted maintenance in these areas is recommended to prevent further encroachment.",
+        "image": "images/reports/baker1.jpg"
+      },
+      {
+        "latlng": "[44.66833, -118.07262]",
+        "risk": "LOW",
+        "temperature": "7.5",
+        "humidity": "62.34",
+        "soilMoisture": "0.41",
+        "growthRate": "29",
+        "assessmentText": "The vegetation growth risk in this area is low. The low growth rate, sparse forest density, and only a few isolated trees identified in risk areas minimize the likelihood of significant encroachment. Routine monitoring and occasional maintenance should be sufficient to manage the situation effectively.",
+        "image": "images/reports/baker2.jpg"
+      },
+      {
+        "latlng": "[44.67444, -118.09803]",
+        "risk": "LOW",
+        "temperature": "7.5",
+        "humidity": "62.34",
+        "soilMoisture": "0.41",
+        "growthRate": "29",
+        "assessmentText": "The vegetation growth risk in this area is low. The slow growth rate, low forest density, and the presence of only a small risk area with isolated trees reduce the potential for significant encroachment. Periodic monitoring and minimal maintenance should suffice to manage the vegetation effectively.",
+        "image": "images/reports/baker3.jpg"
+      },
+      {
+        "latlng": "[44.6650343, -117.9571]",
+        "risk": "MEDIUM",
+        "temperature": "7.5",
+        "humidity": "62.34",
+        "soilMoisture": "0.41",
+        "growthRate": "29",
+        "assessmentText": "The vegetation growth risk in this area is moderate. While the plant growth rate is low and the forest density is sparse, the proximity to a river increases the potential for vegetation spread. Additionally, visible vegetation along power lines warrants regular monitoring and targeted maintenance to mitigate potential hazards.",
+        "image": "images/reports/baker4.jpg"
+      },
+      {
+        "latlng": "[44.8074986,-117.1994358]",
+        "risk": "MEDIUM",
+        "temperature": "5.42",
+        "humidity": "71.34",
+        "soilMoisture": "0.46",
+        "growthRate": "26",
+        "assessmentText": "The vegetation growth risk in this area is moderate. Although the growth rate is low and forest density is sparse, the presence of several vegetation clusters along power lines increases the potential for interference. Regular inspections and focused maintenance on these clusters are recommended to manage the risk effectively.",
+        "image": "images/reports/baker6.jpg"
+      },
+      {
+        "latlng": "[44.353403, -117.284976]",
+        "risk": "LOW",
+        "temperature": "8.94",
+        "humidity": "59.97",
+        "soilMoisture": "0.41",
+        "growthRate": "27",
+        "assessmentText": "The vegetation growth risk in this area is low. With a low growth rate and no significant forested areas, the small cluster of vegetation along the power lines presents minimal risk. Routine monitoring and occasional maintenance should be sufficient to manage the situation effectively.",
+        "image": "images/reports/baker7.jpg"
+      },
+      {
+        "latlng": "[44.353744, -117.284903]",
+        "risk": "LOW",
+        "temperature": "8.94",
+        "humidity": "59.97",
+        "soilMoisture": "0.41",
+        "growthRate": "27",
+        "assessmentText": "The vegetation growth risk in this area is low. The slow growth rate and lack of significant forested areas reduce the likelihood of encroachment, while the small strip of vegetation along the power lines poses minimal risk. Regular inspections and basic maintenance should adequately address any potential concerns.",
+        "image": "images/reports/baker8.jpg"
+      },
+      {
+        "latlng": "[44.664965, -118.054465]",
+        "risk": "MEDIUM",
+        "temperature": "7.5",
+        "humidity": "62.34",
+        "soilMoisture": "0.41",
+        "growthRate": "29",
+        "assessmentText": "The vegetation growth risk in this area is moderate. Although the growth rate is low, the extensive forested area and clusters of trees along the power lines increase the potential for interference. Regular monitoring and focused maintenance on the identified clusters are necessary to manage the risk effectively.",
+        "image": "images/reports/baker9.jpg"
+      },
+      {
+        "latlng": "[44.6786213, -118.1893556]",
+        "risk": "HIGH",
+        "temperature": "7.5",
+        "humidity": "62.34",
+        "soilMoisture": "0.41",
+        "growthRate": "29",
+        "assessmentText": "The vegetation growth risk in this area is moderate. The combination of a low growth rate, extensive and dense forest cover, and visible clusters of trees along the power lines increases the potential for encroachment. Regular monitoring and proactive maintenance of the power lines are necessary to prevent potential interference with the infrastructure.",
+        "image": "images/reports/baker10.jpg"
+      }
+    ]
+  }
+]
