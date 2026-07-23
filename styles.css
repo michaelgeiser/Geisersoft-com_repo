@@ -74,16 +74,18 @@ header {
     right: 24px;
     top: 50%;
     transform: translateY(-50%);
+    box-sizing: border-box;
     width: 64px;
     height: 32px;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.15);
     cursor: pointer;
-    padding: 0;
+    padding: 0 7px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    overflow: hidden;
     transition: background-color 0.2s ease;
 }
 
@@ -92,13 +94,13 @@ header {
 }
 
 .theme-toggle-icon {
-    width: 32px;
-    height: 32px;
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.95em;
+    font-size: 0.85em;
     line-height: 1;
     position: relative;
     z-index: 1;
@@ -108,12 +110,13 @@ header {
     position: absolute;
     top: 2px;
     left: 2px;
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     background: #ffffff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     transition: transform 0.25s ease;
+    z-index: 0;
 }
 
 [data-theme="dark"] .theme-toggle-thumb {
