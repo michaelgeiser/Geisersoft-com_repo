@@ -1,13 +1,45 @@
 /* GeiserSoft Website Styles */
 
+/* Theme Variables */
+:root {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --header-bg: #2c3e50;
+    --header-text: #ffffff;
+    --heading-color: #2c3e50;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --border-color: #ddd;
+    --accent-color: #3498db;
+    --accent-hover: #2980b9;
+    --footer-bg: #2c3e50;
+    --footer-text: #ffffff;
+}
+
+[data-theme="dark"] {
+    --bg-color: #181a1b;
+    --text-color: #e0e0e0;
+    --header-bg: #10131a;
+    --header-text: #f5f5f5;
+    --heading-color: #f5f5f5;
+    --card-bg: #242628;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --border-color: #3a3a3a;
+    --accent-color: #5aa9e6;
+    --accent-hover: #7fbdec;
+    --footer-bg: #10131a;
+    --footer-text: #f5f5f5;
+}
+
 /* Global Styles */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .container {
@@ -19,19 +51,73 @@ body {
 
 /* Header Styles */
 header {
-    background-color: #2c3e50;
-    color: white;
+    background-color: var(--header-bg);
+    color: var(--header-text);
     height: 120px; /* Reduced from implied height of padding */
     display: flex;
     align-items: center; /* Vertically centers content */
     justify-content: center; /* Horizontally centers content */
     padding: 0; /* Remove padding since we're using fixed height */
+    position: relative;
+    transition: background-color 0.2s ease;
 }
 
 .header-content {
     display: flex;
     align-items: center;
     gap: 20px; /* Adds space between header elements */
+}
+
+/* Theme Toggle (slider switch) */
+.theme-toggle {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 64px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.theme-toggle-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95em;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.theme-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease;
+}
+
+[data-theme="dark"] .theme-toggle-thumb {
+    transform: translateX(32px);
 }
 
 .logo {
@@ -52,21 +138,21 @@ section {
 h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #FFFFFF  ;
+    color: var(--header-text);
 }
 
 h2 {
     font-size: 2em;
-    border-bottom: 2px solid #3498db;
+    border-bottom: 2px solid var(--accent-color);
     padding-bottom: 10px;
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: var(--heading-color);
 }
 
 h3 {
     font-size: 1.5em;
     margin-bottom: 15px;
-    color: #2c3e50;
+    color: var(--heading-color);
 }
 
 p {
@@ -78,11 +164,12 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: white;
+    background-color: var(--card-bg);
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px var(--card-shadow);
     margin-bottom: 30px;
+    transition: background-color 0.2s ease;
 }
 
 .extension-info {
@@ -96,7 +183,7 @@ p {
 .extension-image {
     max-width: 300px;
     height: auto;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
 }
 
@@ -107,7 +194,7 @@ p {
 
 .cta-button {
     display: inline-block;
-    background-color: #3498db;
+    background-color: var(--accent-color);
     color: white;
     padding: 12px 24px;
     text-decoration: none;
@@ -117,16 +204,17 @@ p {
 }
 
 .cta-button:hover {
-    background-color: #2980b9;
+    background-color: var(--accent-hover);
 }
 
 /* Footer Styles */
 footer {
-    background-color: #2c3e50;
-    color: white;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
     text-align: center;
     padding: 20px 0;
     margin-top: 40px;
+    transition: background-color 0.2s ease;
 }
 
 footer p {
@@ -134,24 +222,24 @@ footer p {
 }
 
 footer a {
-    color: white;
+    color: var(--footer-text);
     text-decoration: none; /* Removes underline */
 }
 
 /* Style for visited links */
 footer a:visited {
-    color: white;
+    color: var(--footer-text);
 }
 
 /* Style for hover state (optional) */
 footer a:hover {
-    color: white;
+    color: var(--footer-text);
     text-decoration: underline; /* Adds underline on hover - optional */
 }
 
 /* Style for active state (when clicking) */
 footer a:active {
-    color: white;
+    color: var(--footer-text);
 }
 
 /* Responsive Design */
