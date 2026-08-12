@@ -6,41 +6,18 @@ phases:
       python: 3.12
   build:
     commands:
-      - echo "Deploying only changed files from the latest push..."
-      # Get changed files compared to the previous commit
-      # Only uploads new/modified files — does NOT delete anything from S3
+      - echo "Deploying changed files to S3..."
+      # CodePipeline source artifacts are extracted zips with no .git directory,
+      # so git-based diffing is not possible. Instead, use s3 sync which only
+      # uploads files that are new or modified (compared by size and timestamp).
+      # Does NOT use --delete, so files in S3 that aren't in the repo are left alone.
       - |
-        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git diff-tree --no-commit-id --name-only -r HEAD)
-        echo "Changed files:"
-        echo "$CHANGED_FILES"
-        
-        for file in $CHANGED_FILES; do
-          if [ -f "$file" ]; then
-            # Skip pipeline config files
-            case "$file" in
-              buildspec-*|pipeline-stack.yaml|.git/*) continue ;;
-            esac
-            echo "Uploading: $file"
-            aws s3 cp "$file" "s3://geisersoft-site-358227436652/$file"
-          else
-            echo "Skipping (not in repo): $file"
-          fi
-        done
+        aws s3 sync . s3://geisersoft-site-358227436652/ \
+          --exclude ".git/*" \
+          --exclude "buildspec-*.yml" \
+          --exclude "pipeline-stack.yaml"
   post_build:
     commands:
-      - echo "Invalidating CloudFront cache for changed paths..."
-      - |
-        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git diff-tree --no-commit-id --name-only -r HEAD)
-        PATHS=""
-        for file in $CHANGED_FILES; do
-          case "$file" in
-            buildspec-*|pipeline-stack.yaml|.git/*) continue ;;
-          esac
-          if [ -f "$file" ]; then
-            PATHS="$PATHS /$file"
-          fi
-        done
-        if [ -n "$PATHS" ]; then
-          aws cloudfront create-invalidation --distribution-id E38F17UQPVUDDG --paths $PATHS
-        fi
+      - echo "Invalidating CloudFront cache..."
+      - aws cloudfront create-invalidation --distribution-id E38F17UQPVUDDG --paths "/*"
       - echo "Deploy complete."
