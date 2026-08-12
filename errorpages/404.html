@@ -52,6 +52,50 @@
         .error-home-link:hover {
             background-color: var(--accent-hover);
         }
+
+        .debug-toggle {
+            display: block;
+            text-align: left;
+            margin-top: 20px;
+            font-size: 0.75em;
+            color: var(--heading-color);
+            opacity: 0.5;
+            cursor: pointer;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        .debug-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .debug-panel {
+            display: none;
+            text-align: left;
+            margin-top: 12px;
+            padding: 12px;
+            background-color: var(--code-bg, #f4f4f4);
+            border: 1px solid var(--border-color, #ddd);
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.8em;
+            width: 100%;
+            max-width: 600px;
+            word-break: break-all;
+            opacity: 0.85;
+        }
+
+        .debug-panel dt {
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .debug-panel dd {
+            margin: 2px 0 0 0;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +117,33 @@
             <h2 class="error-message">Page Not Found</h2>
             <p class="error-description">The resource you requested doesn't exist, was moved, or maybe it was just a dream you had during an on-call shift.</p>
             <a href="/" class="error-home-link">Back to Home</a>
+            <button class="debug-toggle" onclick="document.getElementById('debug-panel').style.display = document.getElementById('debug-panel').style.display === 'none' ? 'block' : 'none'">Show debug info</button>
+            <div id="debug-panel" class="debug-panel">
+                <dl>
+                    <dt>Code</dt>
+                    <dd>NoSuchKey</dd>
+                    <dt>Message</dt>
+                    <dd>The specified key does not exist.</dd>
+                    <dt>Key</dt>
+                    <dd id="dbg-key"></dd>
+                    <dt>Requested URL</dt>
+                    <dd id="dbg-url"></dd>
+                    <dt>Referrer</dt>
+                    <dd id="dbg-referrer"></dd>
+                    <dt>Timestamp</dt>
+                    <dd id="dbg-time"></dd>
+                    <dt>User Agent</dt>
+                    <dd id="dbg-ua"></dd>
+                </dl>
+                <p style="margin-top:12px; font-size:0.9em; opacity:0.7;">Note: RequestId and HostId are only available in the raw S3 response. To capture them here, a CloudFront Function would need to forward those values.</p>
+            </div>
+            <script>
+                document.getElementById('dbg-key').textContent = window.location.pathname.replace(/^\//, '') || '(root)';
+                document.getElementById('dbg-url').textContent = window.location.href;
+                document.getElementById('dbg-referrer').textContent = document.referrer || '(none)';
+                document.getElementById('dbg-time').textContent = new Date().toISOString();
+                document.getElementById('dbg-ua').textContent = navigator.userAgent;
+            </script>
         </main>
     </div>
 

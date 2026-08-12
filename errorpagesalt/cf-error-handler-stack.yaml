@@ -1,0 +1,122 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Lambda@Edge function for intercepting S3 error responses and redirecting
+  to the generic error page with AWS error details as query parameters.
+  MUST be deployed in us-east-1 (required for Lambda@Edge).
+  NOTE: This fires on EVERY origin response, not just errors. See errorpages/ for
+  the zero-cost alternative using CloudFront custom error responses.
+
+Parameters:
+  CloudFrontDistributionArn:
+    Type: String
+    Description: ARN of the CloudFront distribution (e.g., arn:aws:cloudfront::358227436652:distribution/E38F17UQPVUDDG)
+    Default: arn:aws:cloudfront::358227436652:distribution/E38F17UQPVUDDG
+
+Resources:
+
+  LambdaEdgeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: geisersoft-lambda-edge-error-handler-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+                - edgelambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  ErrorHandlerFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: geisersoft-cf-error-handler
+      Description: Intercepts S3 error responses and redirects to generic error page with details
+      Runtime: nodejs20.x
+      Handler: index.handler
+      Role: !GetAtt LambdaEdgeRole.Arn
+      Timeout: 5
+      MemorySize: 128
+      Code:
+        ZipFile: |
+          'use strict';
+          exports.handler = async (event) => {
+              const response = event.Records[0].cf.response;
+              const request = event.Records[0].cf.request;
+              const statusCode = parseInt(response.status, 10);
+
+              if (statusCode < 400) {
+                  return response;
+              }
+
+              if (request.uri.startsWith('/errorpages/')) {
+                  return response;
+              }
+
+              let awsCode = '';
+              let awsMessage = '';
+              let awsKey = '';
+              let awsRequestId = '';
+              let awsHostId = '';
+
+              const body = response.body || '';
+              if (body && body.includes('<Error>')) {
+                  awsCode = extractXmlTag(body, 'Code');
+                  awsMessage = extractXmlTag(body, 'Message');
+                  awsKey = extractXmlTag(body, 'Key');
+                  awsRequestId = extractXmlTag(body, 'RequestId');
+                  awsHostId = extractXmlTag(body, 'HostId');
+              }
+
+              const params = new URLSearchParams();
+              params.set('status', statusCode.toString());
+              params.set('originalurl', request.uri);
+              if (awsCode) params.set('code', awsCode);
+              if (awsMessage) params.set('message', awsMessage);
+              if (awsKey) params.set('key', awsKey);
+              if (awsRequestId) params.set('requestid', awsRequestId);
+              if (awsHostId) params.set('hostid', awsHostId);
+
+              const redirectUrl = '/errorpages/error.html?' + params.toString();
+
+              return {
+                  status: '302',
+                  statusDescription: 'Found',
+                  headers: {
+                      'location': [{ key: 'Location', value: redirectUrl }],
+                      'cache-control': [{ key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' }]
+                  }
+              };
+          };
+
+          function extractXmlTag(xml, tag) {
+              const match = xml.match(new RegExp('<' + tag + '>([^<]*)</' + tag + '>'));
+              return match ? match[1] : '';
+          }
+
+  ErrorHandlerVersion:
+    Type: AWS::Lambda::Version
+    Properties:
+      FunctionName: !Ref ErrorHandlerFunction
+      Description: Initial version for Lambda@Edge deployment
+
+Outputs:
+  LambdaEdgeArn:
+    Value: !Ref ErrorHandlerVersion
+    Description: >
+      Published version ARN to associate with your CloudFront distribution.
+      Add this to your distribution's default cache behavior under
+      "Lambda function associations" with event type "origin-response".
+      Include the body by setting IncludeBody to true on the association.
+
+  DeploymentNotes:
+    Value: >
+      After deploying this stack in us-east-1, update your CloudFront distribution
+      to add a Lambda function association on the default cache behavior:
+      Event = origin-response, Lambda ARN = the LambdaEdgeArn output above,
+      Include Body = Yes. Then remove any custom error response configurations
+      from CloudFront since this Lambda handles errors directly.
+    Description: Steps to complete the setup

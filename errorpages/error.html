@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error | GeiserSoft</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/theme.js"></script>
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 80px 20px;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-code {
+            font-size: 8em;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .error-message {
+            font-size: 1.5em;
+            margin: 20px 0 10px;
+            color: var(--heading-color);
+        }
+
+        .error-description {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            max-width: 500px;
+            opacity: 0.85;
+        }
+
+        .error-home-link {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .error-home-link:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .debug-toggle {
+            display: block;
+            text-align: left;
+            margin-top: 20px;
+            font-size: 0.75em;
+            color: var(--heading-color);
+            opacity: 0.5;
+            cursor: pointer;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        .debug-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .debug-panel {
+            display: none;
+            text-align: left;
+            margin-top: 12px;
+            padding: 12px;
+            background-color: var(--code-bg, #f4f4f4);
+            border: 1px solid var(--border-color, #ddd);
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.8em;
+            width: 100%;
+            max-width: 600px;
+            word-break: break-all;
+            opacity: 0.85;
+        }
+
+        .debug-panel dt {
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .debug-panel dd {
+            margin: 2px 0 0 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="/images/GeiserSoft.svg" alt="GeiserSoft Logo" class="logo">
+            <h1>GeiserSoft</h1>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Switch to dark mode">
+            <span class="theme-toggle-icon" aria-hidden="true">☀️</span>
+            <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+            <span class="theme-toggle-thumb"></span>
+        </button>
+    </header>
+
+    <div class="container">
+        <main class="error-container">
+            <p class="error-code" id="error-code">Error</p>
+            <h2 class="error-message" id="error-title">Something Went Wrong</h2>
+            <p class="error-description" id="error-description">An unexpected error occurred.</p>
+            <a href="/" class="error-home-link">Back to Home</a>
+            <button class="debug-toggle" onclick="document.getElementById('debug-panel').style.display = document.getElementById('debug-panel').style.display === 'none' ? 'block' : 'none'">Show debug info</button>
+            <div id="debug-panel" class="debug-panel">
+                <dl>
+                    <dt>Status</dt>
+                    <dd id="dbg-status"></dd>
+                    <dt>S3 Error Code</dt>
+                    <dd id="dbg-s3code"></dd>
+                    <dt>S3 Message</dt>
+                    <dd id="dbg-s3message"></dd>
+                    <dt>Key (requested path)</dt>
+                    <dd id="dbg-key"></dd>
+                    <dt>Requested URL</dt>
+                    <dd id="dbg-url"></dd>
+                    <dt>Referrer</dt>
+                    <dd id="dbg-referrer"></dd>
+                    <dt>Timestamp</dt>
+                    <dd id="dbg-time"></dd>
+                    <dt>User Agent</dt>
+                    <dd id="dbg-ua"></dd>
+                </dl>
+                <p style="margin-top:12px; font-size:0.9em; opacity:0.7;">
+                    Note: RequestId and HostId are not available with CloudFront custom error responses.
+                    See /errorpagesalt/ for the Lambda@Edge approach that captures full AWS error details.
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GeiserSoft. All rights reserved.</p>
+            <p>For questions or support, please contact us.</p>
+            <a href="mailto:mgeiser@mgeiser.net" title="Click to send an email">Click here to Email us</a>
+        </div>
+    </footer>
+
+    <script>
+        // Error definitions keyed by HTTP status code
+        // These are the error codes CloudFront allows custom error pages for
+        var errors = {
+            '400': {
+                title: 'Bad Request',
+                s3Code: 'InvalidArgument',
+                s3Message: 'The request was malformed.',
+                description: 'The request was malformed or contained invalid parameters. Double-check the URL and try again.'
+            },
+            '403': {
+                title: 'Forbidden',
+                s3Code: 'AccessDenied',
+                s3Message: 'Access Denied.',
+                description: 'You don\'t have permission to access this resource. If you believe this is a mistake, please contact us.'
+            },
+            '404': {
+                title: 'Page Not Found',
+                s3Code: 'NoSuchKey',
+                s3Message: 'The specified key does not exist.',
+                description: 'The resource you requested doesn\'t exist, was moved, or maybe it was just a dream you had during an on-call shift.'
+            },
+            '405': {
+                title: 'Method Not Allowed',
+                s3Code: 'MethodNotAllowed',
+                s3Message: 'The specified method is not allowed against this resource.',
+                description: 'The HTTP method used is not supported for this resource.'
+            },
+            '414': {
+                title: 'URI Too Long',
+                s3Code: 'InvalidURI',
+                s3Message: 'The URI exceeded the maximum allowed length.',
+                description: 'The requested URL is too long for the server to process. Try shortening it.'
+            },
+            '416': {
+                title: 'Range Not Satisfiable',
+                s3Code: 'InvalidRange',
+                s3Message: 'The requested range is not satisfiable.',
+                description: 'The requested byte range is not available for this resource.'
+            },
+            '500': {
+                title: 'Internal Server Error',
+                s3Code: 'InternalError',
+                s3Message: 'We encountered an internal error. Please try again.',
+                description: 'Something broke on our end. We\'re looking into it — please try again in a moment.'
+            },
+            '501': {
+                title: 'Not Implemented',
+                s3Code: 'NotImplemented',
+                s3Message: 'The requested functionality is not implemented.',
+                description: 'The server does not support the functionality required to fulfill this request.'
+            },
+            '502': {
+                title: 'Bad Gateway',
+                s3Code: 'BadGateway',
+                s3Message: 'The server received an invalid response from the upstream server.',
+                description: 'The server received an invalid response from an upstream service. Please try again shortly.'
+            },
+            '503': {
+                title: 'Service Unavailable',
+                s3Code: 'ServiceUnavailable',
+                s3Message: 'Service is temporarily unavailable. Please reduce your request rate.',
+                description: 'The service is temporarily unavailable due to maintenance or high load. Please try again later.'
+            },
+            '504': {
+                title: 'Gateway Timeout',
+                s3Code: 'GatewayTimeout',
+                s3Message: 'The gateway did not receive a timely response from the upstream server.',
+                description: 'The server didn\'t respond in time. Please try again in a moment.'
+            }
+        };
+
+        // Determine the error code
+        // CloudFront custom error responses preserve the original status code in the
+        // HTTP response. We can't read it from JS directly, but CloudFront can be
+        // configured to pass it as a query param in the response page path.
+        // E.g., /errorpages/error.html?status=404
+        var params = new URLSearchParams(window.location.search);
+        var statusCode = params.get('status') || '404';
+
+        // Look up the error details
+        var errorInfo = errors[statusCode] || {
+            title: 'Unknown Error',
+            s3Code: 'Unknown',
+            s3Message: 'An unknown error occurred.',
+            description: 'An unexpected error occurred. Please try again or contact us if the problem persists.'
+        };
+
+        // Set page content
+        document.getElementById('error-code').textContent = statusCode;
+        document.getElementById('error-title').textContent = errorInfo.title;
+        document.getElementById('error-description').textContent = errorInfo.description;
+        document.title = statusCode + ' - ' + errorInfo.title + ' | GeiserSoft';
+
+        // Populate debug panel
+        document.getElementById('dbg-status').textContent = statusCode + ' ' + errorInfo.title;
+        document.getElementById('dbg-s3code').textContent = errorInfo.s3Code;
+        document.getElementById('dbg-s3message').textContent = errorInfo.s3Message;
+        document.getElementById('dbg-key').textContent = window.location.pathname.replace(/^\/errorpages\/error\.html$/, '') || params.get('key') || '(from URL: ' + (document.referrer || window.location.href) + ')';
+        document.getElementById('dbg-url').textContent = params.get('originalurl') || document.referrer || window.location.href;
+        document.getElementById('dbg-referrer').textContent = document.referrer || '(none)';
+        document.getElementById('dbg-time').textContent = new Date().toISOString();
+        document.getElementById('dbg-ua').textContent = navigator.userAgent;
+    </script>
+</body>
+</html>
