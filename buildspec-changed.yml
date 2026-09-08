@@ -11,8 +11,13 @@ phases:
       # so git-based diffing is not possible. Instead, use s3 sync which only
       # uploads files that are new or modified (compared by size and timestamp).
       # Does NOT use --delete, so files in S3 that aren't in the repo are left alone.
+      # --cache-control "no-cache" tells browsers they MAY cache the object but
+      # MUST revalidate with the origin (via ETag) before reusing it. This gives
+      # session-lifetime behavior: content is not silently reused stale across a
+      # browser restart, but unchanged files return a cheap 304 within a session.
       - |
         aws s3 sync . s3://geisersoft-site-358227436652/ \
+          --cache-control "no-cache" \
           --exclude ".git/*" \
           --exclude "buildspec-*.yml" \
           --exclude "pipeline-stack.yaml"
